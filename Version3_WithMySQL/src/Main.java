@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/bankingBusiness_db";
         String user = "root";
-        String password = "A0910/*2002";
+        String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             BankService bankService = new BankService(conn);
