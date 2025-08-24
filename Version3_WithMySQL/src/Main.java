@@ -8,13 +8,13 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/bankingBusiness_db";
         String user = "root";
-        String password = "tu_password";
+        String password = "A0910/*2002";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             BankService bankService = new BankService(conn);
 
             // 1. Registrar cliente
-            Client client = new Client("Anais", "Bustamante", "12345678", "anais@mail.com");
+            Client client = new Client("Anais", "Bustamante", "12345679", "anais@mail.com");
             bankService.registerClient(client);
 
             // 2. Abrir cuenta

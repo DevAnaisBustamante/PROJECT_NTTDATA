@@ -15,7 +15,7 @@ public class AccountRepository {
 
     // Guardar cuenta
     public void save(Account account) throws SQLException {
-        String sql = "INSERT INTO cuenta (numero_cuenta, saldo, tipo, cliente_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO cuentabancaria (numerocuenta, saldo, tipo, cliente_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, account.getAccountNumber());
             stmt.setDouble(2, account.getBalance());
@@ -27,14 +27,14 @@ public class AccountRepository {
 
     // Buscar cuenta por número
     public Optional<Account> findByAccountNumber(String accountNumber) throws SQLException {
-        String sql = "SELECT * FROM cuenta WHERE numero_cuenta = ?";
+        String sql = "SELECT * FROM cuentabancaria WHERE numerocuenta = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, accountNumber);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Account account = new Account(
                         rs.getInt("id"),
-                        rs.getString("numero_cuenta"),
+                        rs.getString("numerocuenta"),
                         rs.getDouble("saldo"),
                         AccountType.valueOf(rs.getString("tipo")),
                         rs.getInt("cliente_id")
@@ -47,7 +47,7 @@ public class AccountRepository {
 
     // Actualizar saldo
     public void updateBalance(String accountNumber, double newBalance) throws SQLException {
-        String sql = "UPDATE cuenta SET saldo = ? WHERE numero_cuenta = ?";
+        String sql = "UPDATE cuentabancaria SET saldo = ? WHERE numerocuenta = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, newBalance);
             stmt.setString(2, accountNumber);
