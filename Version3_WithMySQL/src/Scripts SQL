@@ -1,0 +1,74 @@
+//Script de creación de tablas (DDL)
+CREATE DATABASE IF NOT EXISTS bankingBusiness_db;
+USE bankingBusiness_db;
+
+-- Tabla Cliente
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    dni VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL
+);
+
+-- Tabla CuentaBancaria
+CREATE TABLE cuentaBancaria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numeroCuenta VARCHAR(50) NOT NULL UNIQUE,
+    saldo DECIMAL(12,2) NOT NULL DEFAULT 0.0,
+    tipo ENUM('SAVINGS', 'CURRENT') NOT NULL,
+    cliente_id INT NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+//Insertar registros (DML)
+-- Insertar clientes
+INSERT INTO cliente (nombre, apellido, dni, email)
+VALUES
+('Anais', 'Bustamante', '71205648', 'anais@mail.com'),
+('Alexis', 'Ramirez', '52487963', 'carlos@mail.com');
+
+-- Insertar cuentas
+INSERT INTO cuentaBancaria (numeroCuenta, saldo, tipo, cliente_id)
+VALUES
+('SAVING001', 1000.00, 'SAVINGS', 1),
+('CURRENT001', 500.00, 'CURRENT', 1),
+('SAVING002', 2000.00, 'SAVINGS', 2);
+
+
+//Consultar registros (DQL)
+-- Consultar todos los clientes
+SELECT * FROM cliente;
+
+-- Consultar todas las cuentas bancarias
+SELECT * FROM cuentaBancaria;
+
+-- Consultar las cuentas de un cliente específico
+SELECT c.nombre, c.apellido, cb.numeroCuenta, cb.saldo, cb.tipo
+FROM cliente c
+JOIN cuentaBancaria cb ON c.id = cb.cliente_id
+WHERE c.dni = '12345678';
+
+//Actualizar registros (DML)
+-- Actualizar saldo de una cuenta
+UPDATE cuentaBancaria
+SET saldo = saldo + 500
+WHERE numeroCuenta = 'SAVING001';
+
+-- Cambiar email de un cliente
+UPDATE cliente
+SET email = 'anaisbusta@mail.com'
+WHERE dni = '71205648';
+
+-- Consultar saldo total de un cliente sumando todas sus cuentas
+SELECT c.nombre, c.apellido, SUM(cu.saldo) AS saldo_total
+FROM cliente c
+INNER JOIN cuenta cu ON c.id = cu.cliente_id
+WHERE c.dni = '12345678'
+GROUP BY c.id;
+
+-- Ver clientes que tienen cuentas en negativo (solo corrientes)
+SELECT c.nombre, c.apellido, cu.numero_cuenta, cu.saldo
+FROM cliente c
+INNER JOIN cuenta cu ON c.id = cu.cliente_id
+WHERE cu.saldo < 0;

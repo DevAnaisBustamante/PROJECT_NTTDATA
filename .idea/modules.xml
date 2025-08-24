@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/PROJECT_NTTDATA.iml" filepath="$PROJECT_DIR$/PROJECT_NTTDATA.iml" />
       <module fileurl="file://$PROJECT_DIR$/Version1_WithoutService/Version1_WithoutService.iml" filepath="$PROJECT_DIR$/Version1_WithoutService/Version1_WithoutService.iml" />
       <module fileurl="file://$PROJECT_DIR$/Version2_WithService/Version2_WithService.iml" filepath="$PROJECT_DIR$/Version2_WithService/Version2_WithService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Version3_WithMySQL/Version3_WithMySQL.iml" filepath="$PROJECT_DIR$/Version3_WithMySQL/Version3_WithMySQL.iml" />
     </modules>
   </component>
 </project>
