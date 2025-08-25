@@ -8,7 +8,7 @@ public class Main {
         BankService service = new BankService(repository);
 
         // 1. Registrar Cliente
-        System.out.println("1. Registrar domain.Client");
+        System.out.println("1. Registrar Client");
         service.registerClient("71205648", "Anais", "Bustamante", "anais@mail.com");
 
         // 2. Abrir Cuenta
@@ -34,7 +34,7 @@ public class Main {
         System.out.println("Saldo en cuenta Corriente: " + service.checkBalance(currentAcc));
 
         // 6. Filtro de Cuenta por tipo
-        System.out.println("6. Filter Accounts by Type");
+        System.out.println("6. Filtrar cuenta por tipo");
         service.getAccountsByType("71205648", AccountType.CURRENT)
                 .forEach(System.out::println);
     }

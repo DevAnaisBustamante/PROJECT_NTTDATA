@@ -35,7 +35,7 @@ public class BankService {
         if (accountOpt.isPresent()) {
             accountOpt.get().deposit(amount);
         } else {
-            throw new NoSuchElementException("domain.Account not found.");
+            throw new NoSuchElementException("Account not found.");
         }
     }
 
@@ -45,7 +45,7 @@ public class BankService {
         if (accountOpt.isPresent()) {
             accountOpt.get().withdraw(amount);
         } else {
-            throw new NoSuchElementException("domain.Account not found.");
+            throw new NoSuchElementException("Account not found.");
         }
     }
 
@@ -53,7 +53,7 @@ public class BankService {
     public double checkBalance(String accountNumber) {
         return repository.getAccount(accountNumber)
                 .map(Account::getBalance)
-                .orElseThrow(() -> new NoSuchElementException("domain.Account not found."));
+                .orElseThrow(() -> new NoSuchElementException("Account not found."));
     }
 
     // Buscar cliente por DNI

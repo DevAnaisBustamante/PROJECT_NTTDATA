@@ -26,10 +26,10 @@ public class BankRepository {
     public void addAccount(String dni, Account account) {
         Client client = clients.get(dni);
         // Validar que el cliente exista
-        if (client == null) throw new IllegalArgumentException("domain.Client does not exist");
+        if (client == null) throw new IllegalArgumentException("Client does not exist");
         // Validar que el número de cuenta sea único
         if (accounts.containsKey(account.getAccountNumber())) {
-            throw new IllegalArgumentException("domain.Account number already exists");
+            throw new IllegalArgumentException("Account number already exists");
         }
         // Asociar una nueva cuenta a un cliente existente
         client.addAccount(account);
