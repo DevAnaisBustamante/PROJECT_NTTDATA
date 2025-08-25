@@ -1,10 +1,14 @@
+import domain.AccountType;
+import repository.BankRepository;
+import service.BankService;
+
 public class Main {
     public static void main(String[] args) {
         BankRepository repository = new BankRepository();
         BankService service = new BankService(repository);
 
         // 1. Registrar Cliente
-        System.out.println("1. Registrar Client");
+        System.out.println("1. Registrar domain.Client");
         service.registerClient("71205648", "Anais", "Bustamante", "anais@mail.com");
 
         // 2. Abrir Cuenta

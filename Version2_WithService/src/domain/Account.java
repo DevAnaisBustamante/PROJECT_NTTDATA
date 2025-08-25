@@ -1,3 +1,5 @@
+package domain;
+
 // // Clase de dominio que representa una Cuenta Bancaria
 public class Account {
     private String accountNumber;;// Número de Cuenta Bancaria

@@ -47,7 +47,7 @@ SELECT * FROM cuentaBancaria;
 SELECT c.nombre, c.apellido, cb.numeroCuenta, cb.saldo, cb.tipo
 FROM cliente c
 JOIN cuentaBancaria cb ON c.id = cb.cliente_id
-WHERE c.dni = '12345678';
+WHERE c.dni = '71205649';
 
 //Actualizar registros (DML)
 -- Actualizar saldo de una cuenta
@@ -58,17 +58,17 @@ WHERE numeroCuenta = 'SAVING001';
 -- Cambiar email de un cliente
 UPDATE cliente
 SET email = 'anaisbusta@mail.com'
-WHERE dni = '71205648';
+WHERE dni = '71205649';
 
 -- Consultar saldo total de un cliente sumando todas sus cuentas
 SELECT c.nombre, c.apellido, SUM(cu.saldo) AS saldo_total
 FROM cliente c
-INNER JOIN cuenta cu ON c.id = cu.cliente_id
-WHERE c.dni = '12345678'
+INNER JOIN cuentaBancaria cu ON c.id = cu.cliente_id
+WHERE c.dni = '71205649'
 GROUP BY c.id;
 
 -- Ver clientes que tienen cuentas en negativo (solo corrientes)
-SELECT c.nombre, c.apellido, cu.numero_cuenta, cu.saldo
+SELECT c.nombre, c.apellido, cu.numeroCuenta, cu.saldo
 FROM cliente c
-INNER JOIN cuenta cu ON c.id = cu.cliente_id
+INNER JOIN cuentaBancaria cu ON c.id = cu.cliente_id
 WHERE cu.saldo < 0;
