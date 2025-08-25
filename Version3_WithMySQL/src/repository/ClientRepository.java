@@ -4,14 +4,14 @@ import domain.Client;
 import java.sql.*;
 import java.util.Optional;
 
-public class ClientRepository {
+public class ClientRepository implements IClientRepository {
     private final Connection connection;
 
     public ClientRepository(Connection connection) {
         this.connection = connection;
     }
 
-    // Registrar cliente
+    @Override
     public void save(Client client) throws SQLException {
         String sql = "INSERT INTO cliente (nombre, apellido, dni, email) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -23,7 +23,7 @@ public class ClientRepository {
         }
     }
 
-    // Buscar cliente por DNI
+    @Override
     public Optional<Client> findByDni(String dni) throws SQLException {
         String sql = "SELECT * FROM cliente WHERE dni = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

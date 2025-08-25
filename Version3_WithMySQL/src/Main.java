@@ -1,5 +1,6 @@
 import domain.*;
-import service.BankService;
+import repository.*;
+import service.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +12,10 @@ public class Main {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            BankService bankService = new BankService(conn);
+            IClientRepository clientRepo = new ClientRepository(conn);
+            IAccountRepository accountRepo = new AccountRepository(conn);
+
+            IBankService bankService = new BankService(clientRepo, accountRepo);
 
             // 1. Registrar cliente
             Client client = new Client("Anais", "Bustamante", "12345679", "anais@mail.com");
@@ -28,6 +32,17 @@ public class Main {
             // 4. Retirar
             bankService.withdraw("ACC3001", 200);
             System.out.println("Saldo después de retiro: " + bankService.getBalance("ACC3001"));
+
+            //5. Consultar Saldo
+            bankService.getBalance("ACC3001");
+
+            // 6. Listar cuentas por cliente con Stream
+            System.out.println("Cuentas del cliente con DNI 12345679:");
+            bankService.getAccountsByClient("12345679")
+                    .forEach(acc -> System.out.println(
+                            acc.getAccountNumber() + " | Saldo: " + acc.getBalance()
+                    ));
+
 
         } catch (Exception e) {
             e.printStackTrace();
