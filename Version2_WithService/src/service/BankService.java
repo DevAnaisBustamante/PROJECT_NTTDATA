@@ -3,33 +3,31 @@ package service;
 import domain.Account;
 import domain.AccountType;
 import domain.Client;
-import repository.BankRepository;
+import repository.IBankRepository;
 
 import java.util.*;
 
-//Lógica del Negocio
-public class BankService {
-    //Usa el repositorio para acceder a los datos
-    private final BankRepository repository;
+public class BankService implements IBankService {
+    private final IBankRepository repository;
 
-    public BankService(BankRepository repository) {
+    public BankService(IBankRepository repository) {
         this.repository = repository;
     }
 
-    // Registrar cliente
+    @Override
     public void registerClient(String dni, String firstName, String lastName, String email) {
         Client client = new Client(firstName, lastName, dni, email);
         repository.addClient(client);
     }
 
-    // Abrir una nueva cuenta para un cliente existente
+    @Override
     public String openAccount(String dni, AccountType type) {
         Account account = new Account(type);
         repository.addAccount(dni, account);
         return account.getAccountNumber();
     }
 
-    // Realizar un depósito
+    @Override
     public void deposit(String accountNumber, double amount) {
         Optional<Account> accountOpt = repository.getAccount(accountNumber);
         if (accountOpt.isPresent()) {
@@ -39,7 +37,7 @@ public class BankService {
         }
     }
 
-    // Realizar un retiro
+    @Override
     public void withdraw(String accountNumber, double amount) {
         Optional<Account> accountOpt = repository.getAccount(accountNumber);
         if (accountOpt.isPresent()) {
@@ -49,19 +47,19 @@ public class BankService {
         }
     }
 
-    // Consultar el saldo
+    @Override
     public double checkBalance(String accountNumber) {
         return repository.getAccount(accountNumber)
                 .map(Account::getBalance)
                 .orElseThrow(() -> new NoSuchElementException("Account not found."));
     }
 
-    // Buscar cliente por DNI
+    @Override
     public Optional<Client> findClient(String dni) {
         return repository.getClient(dni);
     }
 
-    // Filtrar cuentas de un cliente por tipo
+    @Override
     public List<Account> getAccountsByType(String dni, AccountType type) {
         return repository.getAccountsByType(dni, type);
     }
